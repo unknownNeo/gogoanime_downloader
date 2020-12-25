@@ -64,7 +64,7 @@ def priv():
     f = open(file,'r', encoding = 'utf-8').readlines()
     total = len(f)
     for i in range(0,len(f)):
-        print("Ep no. " + str(total - (1 + i) + 1) + " : " + f[i])
+        print("Ep no. " + str(i + 1) + " : " + f[i])
     print('Total Episodes are : ' + str(total))
     num = input('Enter the episode number : ')
     ep = f[int(num) - 1]
