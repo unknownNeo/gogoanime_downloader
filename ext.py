@@ -17,7 +17,7 @@ def episode():
     w = open(file,'w',encoding = 'utf-8')
     w.write(r.text)
     w.close()
-    f = open(file,'r').readlines()
+    f = open(file,'r',encoding = 'utf-8').readlines()
     for line in f:
         if 'ep_end =' in line:
             data = line
@@ -41,7 +41,6 @@ def select(anime):
     if num > len(f) + 1 or num < 1:
         print("[!] Enter From above list....")
         return 0
-    
     ep = f[num - 1]
     return ep
 
@@ -63,45 +62,39 @@ def priv():
             break
     f = open(file,'r', encoding = 'utf-8').readlines()
     total = len(f)
+    '''
     for i in range(0,len(f)):
         print("Ep no. " + str(i + 1) + " : " + f[i])
+    '''
     print('Total Episodes are : ' + str(total))
     num = input('Enter the episode number : ')
     ep = f[int(num) - 1]
     return ep
 
-'''
-try:
-    num = input(' 1 || Check Priv. Anime Lists\n 2 || Enter Url\n : ')
-    int(num)
-    if int(num) > 2 or int(num) < 1:
-        print('[!]Enter From The above options...')
-    elif int(num) == 1:
-        url = priv()
-        if url != 0:
-            servers(url)
-    elif int(num) == 2:
-        url = episode()
-        if url != 0:
-            servers(url)
 
-except:
-    print('Enter only Number.... ')        
-'''
 
 def menu():
-    num = input(' 1 || Check Priv. Anime Lists\n 2 || Enter Url\n : ')
-    int(num)
-    if int(num) > 2 or int(num) < 1:
-        print('[!]Enter From The above options...')
-    elif int(num) == 1:
-        url = priv()
+   while True: 
+    try:
+        num = input(' 1 || Check Priv. Anime Lists\n 2 || Enter Url\n : ')
+        int(num)
+        if int(num) > 2 or int(num) < 1:
+            print('[!]Enter From The above options...')
+        elif int(num) == 1:
+            url = priv()
+            if url != 0:
+                servers(url)
+                break
+        elif int(num) == 2:
+            url = episode()
         if url != 0:
             servers(url)
-    elif int(num) == 2:
-        url = episode()
-        if url != 0:
-            servers(url)
+            break
+    except ValueError:
+        print("Select from the above...")
+    except KeyboardInterrupt:
+        print('Exiting....')
+        break
             
 def servers(url):
     print(' 1 || Default-server\n 2 || gogo-server\n 3 || cloud9\n 4 || streamsb')
@@ -119,7 +112,12 @@ def servers(url):
         if server == '4':
             gogoanime.streamsb(url)
             break
+        if server == '':
+            print('Using Default Server')
+            gogoanime.default(url)
+            break
         else:
             print('Enter only From options')
+            
             
 menu()
